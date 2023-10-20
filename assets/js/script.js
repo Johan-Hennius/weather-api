@@ -9,7 +9,7 @@ const searchBtn = document.getElementById('search-btn');
 const weatherInfo = document.getElementById('weather-info');
 
 // Event Listener to search return
-searchBtn.addEventListener('click', async function() {
+searchBtn.addEventListener('click', async function () {
 
     const city = cityInput.value;
     const coordinates = await fetchCoordinates(city);
@@ -17,9 +17,33 @@ searchBtn.addEventListener('click', async function() {
 
 });
 
+// Function to get the city's coordinates using openWeather API
 async function fetchCoordinates() {
-    
-    const response = await fetch (`https//api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
-    
+
+    const response = await fetch(`https//api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
+    const [data] = await response.json();
+    if (data) {
+        return { lat: data.lat, lon: data.lon }
+    } else {
+        return null;
+    }
+
+}
+
+// Function to get the weather at given set of coordinates
+async function fetchWeather(lat, lon) {
+
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+    const data = await response.json();
+
+    if (data.cod === 200) {
+        weatherInfo.innerHTML = `
+            <h2>${data.name}, ${data.country}</h2>
+            <h3>${data.weather[0].description}</h3>
+            <h3>Temperature: ${data.main.temp} C</p>
+            `;
+    } else {
+        weatherInfo.innerHTML = '<h3>City Not Found</h3>'
+    }
 
 }
