@@ -16,10 +16,18 @@
 <body>
 
     <div class="container">
-        <h1>Weather</h1>
-        <label for="city" class="form-label">City:</label>
-        <input type="text" id="city" class="form-control mt-2" placeholder="please enter city">
-        <button id="search-btn" class="btn btn-primary mt-5 mx-auto">Search</button>
+        <div class="row justify-content-center mt-5">
+            <div class="col-6 d-flex flex-column">
+                <h1 class="mx-auto">Weather</h1>
+                <label for="city" class="form-label text">City</label>
+                <input type="text" id="city" class="form-control mt-2" placeholder="please enter city">
+                <button id="search-btn" class="btn btn-primary mt-5 mx-auto">Search</button>
+            </div>
+        </div>
+
+        <div id="weather-info">
+            <!--weather info goes here-->
+        </div>
     </div>
 
     <!--javascript-->
