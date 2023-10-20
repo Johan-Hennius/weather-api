@@ -18,9 +18,9 @@ searchBtn.addEventListener('click', async function () {
 });
 
 // Function to get the city's coordinates using openWeather API
-async function fetchCoordinates() {
+async function fetchCoordinates(city) {
 
-    const response = await fetch(`https//api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
+    const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
     const [data] = await response.json();
     if (data) {
         return { lat: data.lat, lon: data.lon }
@@ -38,12 +38,13 @@ async function fetchWeather(lat, lon) {
 
     if (data.cod === 200) {
         weatherInfo.innerHTML = `
-            <h2>${data.name}, ${data.country}</h2>
-            <h3>${data.weather[0].description}</h3>
-            <h3>Temperature: ${data.main.temp} C</p>
+            <h2>${data.name}, ${data.sys.country}</h2>
+            <h5>${data.weather[0].description}</h5>
+            <h5>Temperature: ${data.main.temp} C</h5>
             `;
     } else {
         weatherInfo.innerHTML = '<h3>City Not Found</h3>'
     }
 
 }
+
